@@ -143,7 +143,7 @@ void setAllLedlight(int redValue, int greenValue, int blueValue) {
 }
 
 void setLedlight(int pin, int value) {
-  analogWrite(pin,map(value, 0, 255, 0, 1023));
+  analogWrite(pin,map(value, 0, 255, 1023, 0));
 }
 
 // MOTOR
