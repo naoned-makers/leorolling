@@ -18,6 +18,10 @@ export class Driver extends React.Component {
               <BrickShape bricks={this.props.shapes[3].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(4)} onTouchEnd={() => this.move(0)}/>
               <BrickShape bricks={this.props.shapes[4].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.disconnect()}/>
               <BrickShape bricks={this.props.shapes[5].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(5)} onTouchEnd={() => this.move(0)}/>
+              <BrickShape bricks={this.props.shapes[6].cells} classShape="lego grey upper"/>
+              <BrickShape bricks={this.props.shapes[7].cells} classShape="lego grey upper"/>
+              <BrickShape bricks={this.props.shapes[8].cells} classShape="lego grey upper"/>
+              <BrickShape bricks={this.props.shapes[9].cells} classShape="lego grey upper"/>
             </Baseplate>
 
         );
@@ -105,6 +109,30 @@ Driver.defaultProps = {
             {x:12, y:9}, {x:12, y:10}, {x:12, y:11},
             {x:9, y:9}, {x:10, y:9}, {x:11, y:9},
             {x:9, y:10}
+        ]
+      },
+      {cells : [
+            //HAUT GAUCHE
+            {x:3, y:3}, {x:4, y:3}, {x:5, y:3},
+            {x:3, y:4}, {x:3, y:5}
+        ]
+      },
+      {cells : [
+            //HAUT DROITE
+            {x:14, y:3}, {x:15, y:3}, {x:16, y:3},
+            {x:16, y:4}, {x:16, y:5}
+        ]
+      },
+      {cells : [
+            //BAS GAUCHE
+            {x:3, y:14}, {x:3, y:15}, {x:3, y:16},
+            {x:4, y:16}, {x:5, y:16}
+        ]
+      },
+      {cells : [
+            //BAS DROITE
+            {x:14, y:16}, {x:15, y:16}, {x:16, y:16},
+            {x:16, y:14}, {x:16, y:15}
         ]
       }]
 };
