@@ -66,7 +66,6 @@ export class Baseplate extends React.Component {
 
     componentDidMount() {
       this.props.children.forEach((child) => {
-        console.log("child.props : ", child.props);
         let selectElts  = document.querySelectorAll(child.props.bricks.map((brick)=>{return "[x='"+brick.x+"'][y='"+brick.y+"']"}).join(","));
         selectElts.forEach((elt)=>{
           elt.className = child.props.classShape;

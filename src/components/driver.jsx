@@ -7,33 +7,47 @@ export class Driver extends React.Component {
 
     constructor(props, context) {
       super(props, context);
+      this.timeOutAction = null;
+      this.timeOutSession = null;
     }
 
     render() {
-        return (
-            <Baseplate width={18} height={26}>
-              <BrickShape bricks={this.props.shapes[0].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(1)} onTouchEnd={() => this.move(0)}/>
-              <BrickShape bricks={this.props.shapes[1].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(2)} onTouchEnd={() => this.move(0)}/>
-              <BrickShape bricks={this.props.shapes[2].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(3)} onTouchEnd={() => this.move(0)}/>
-              <BrickShape bricks={this.props.shapes[3].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(4)} onTouchEnd={() => this.move(0)}/>
-              <BrickShape bricks={this.props.shapes[4].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.disconnect()}/>
-              <BrickShape bricks={this.props.shapes[5].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(5)} onTouchEnd={() => this.move(0)}/>
-              <BrickShape bricks={this.props.shapes[6].cells} classShape="lego grey upper"/>
-              <BrickShape bricks={this.props.shapes[7].cells} classShape="lego grey upper"/>
-              <BrickShape bricks={this.props.shapes[8].cells} classShape="lego grey upper"/>
-              <BrickShape bricks={this.props.shapes[9].cells} classShape="lego grey upper"/>
-            </Baseplate>
+      console.log("render");
+      return (
+        <Baseplate width={18} height={26}>
+          <BrickShape bricks={this.props.shapes[0].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(1)} onTouchEnd={() => this.move(0)}/>
+          <BrickShape bricks={this.props.shapes[1].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(2)} onTouchEnd={() => this.move(0)}/>
+          <BrickShape bricks={this.props.shapes[2].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(3)} onTouchEnd={() => this.move(0)}/>
+          <BrickShape bricks={this.props.shapes[3].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(4)} onTouchEnd={() => this.move(0)}/>
+          <BrickShape bricks={this.props.shapes[4].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.disconnect()}/>
+          <BrickShape bricks={this.props.shapes[5].cells} classShape="lego grey upper" activeClassShape="lego blue upper" onTouchStart={() => this.move(5)} onTouchEnd={() => this.move(0)}/>
+          <BrickShape bricks={this.props.shapes[6].cells} classShape="lego grey upper"/>
+          <BrickShape bricks={this.props.shapes[7].cells} classShape="lego grey upper"/>
+          <BrickShape bricks={this.props.shapes[8].cells} classShape="lego grey upper"/>
+          <BrickShape bricks={this.props.shapes[9].cells} classShape="lego grey upper"/>
+        </Baseplate>
+      );
+    }
 
-        );
+    componentDidMount() {
+      this.timeOutSession = setTimeout(this.disconnect.bind(this), 120000);
+      this.timeOutAction = setTimeout(this.disconnect.bind(this), 10000);
+    }
+
+    componentWillUnmount() {
+      clearTimeout(this.timeOut);
+      clearTimeout(this.timeOutSession);
     }
 
     move(direction) {
+      clearTimeout(this.timeOutAction);
       this.props.device.getService("sCommand")
       .then((service) => {
         return service.getCharacteristic("cCommand")
       })
       .then((characteristic) => {
-        return characteristic.write(this.props.move.dataToSend([direction]));
+        return characteristic.write(this.props.move.dataToSend([direction]))
+               .then(() => { this.timeOutAction = setTimeout(this.disconnect.bind(this), 10000);});
       }).catch(error => {
         this.showMessage("Erreur lors de l'envoi de la commande à LEO : " + error + ". Deconnexion en cours...");
         console.log(error);
