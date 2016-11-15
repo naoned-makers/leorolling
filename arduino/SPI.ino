@@ -52,13 +52,17 @@ void setup(void)
   Serial.println("Requesting Bluefruit info:");
   ble.verbose(false);  // debug info is a little annoying after this point!
   ble.setMode(BLUEFRUIT_MODE_DATA);
+  
   setAllLedlight(255, 0, 0);
   delay(500);
 
-  setAllLedlight(0, 255, 0);
+  setAllLedlight(255, 228, 0);
   delay(500);
 
-  setAllLedlight(0, 0, 255);
+  setAllLedlight(255, 0, 234);
+  delay(500);
+    
+  setAllLedlight(0, 228, 255);
   delay(500);
 
   setAllLedlight(0, 0, 0);
@@ -143,7 +147,7 @@ void setAllLedlight(int redValue, int greenValue, int blueValue) {
 }
 
 void setLedlight(int pin, int value) {
-  analogWrite(pin,map(value, 0, 255, 0, 1023));
+  analogWrite(pin,map(value, 0, 255, 1023, 0));
 }
 
 // MOTOR
@@ -155,39 +159,39 @@ void activateMotors(int pDirection) {
       activateMotor(MOTOR_1, STOP, POWER_OFF);
       activateMotor(MOTOR_2, STOP, POWER_OFF);
       break;
-    case FRONT:
-      Serial.println("Front");
-      setAllLedlight(128, 192, 256);
-      activateMotor(MOTOR_1, FRONT, POWER_MAX);
-      activateMotor(MOTOR_2, FRONT, POWER_MAX);
-      break;
     case BACK:
       Serial.println("back");
       setAllLedlight(255, 0, 0);
+      activateMotor(MOTOR_1, FRONT, POWER_MAX);
+      activateMotor(MOTOR_2, FRONT, POWER_MAX);
+      break;
+    case FRONT:
+      Serial.println("Front");
+      setAllLedlight(0, 228, 255);
       activateMotor(MOTOR_1, BACK, POWER_MAX);
       activateMotor(MOTOR_2, BACK, POWER_MAX);
       break;
-    case LEFT:
-      Serial.println("Left");
-      setAllLedlight(255, 200, 0);
-      activateMotor(MOTOR_2, STOP, POWER_MAX);
-      activateMotor(MOTOR_1, FRONT, POWER_MAX);
-      break;
     case RIGHT:
       Serial.println("Right");
-      setAllLedlight(255, 200, 0);
-      activateMotor(MOTOR_2, FRONT, POWER_MAX);
-      activateMotor(MOTOR_1, STOP, POWER_OFF);
+      setAllLedlight(255, 228, 0);
+      activateMotor(MOTOR_2, STOP, POWER_MAX); // OLD : STOP
+      activateMotor(MOTOR_1, BACK, POWER_MAX); // OLD : FRONT
+      break;
+    case LEFT:
+      Serial.println("Left");
+      setAllLedlight(255, 228, 0);
+      activateMotor(MOTOR_2, BACK, POWER_MAX); // OLD : FRONT
+      activateMotor(MOTOR_1, STOP, POWER_OFF); // OLD : STOP
       break;
     case TORNADO_L:
       Serial.println("Tornado Left");
-      setAllLedlight(128, 256, 0);
+      setAllLedlight(255, 0, 234);
       activateMotor(MOTOR_2, BACK, POWER_MAX);
       activateMotor(MOTOR_1, FRONT, POWER_MAX);
       break;
     case TORNADO_R:
       Serial.println("Tornado Right");
-      setAllLedlight(128, 256, 0);
+      setAllLedlight(255, 0, 234);
       activateMotor(MOTOR_2, FRONT, POWER_MAX);
       activateMotor(MOTOR_1, BACK, POWER_MAX);
       break;
