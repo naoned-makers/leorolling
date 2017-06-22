@@ -170,14 +170,14 @@ void activateMotors(int pDirection) {
     case LEFT:
       Serial.println("Left");
       setAllLedlight(255, 200, 0);
-      activateMotor(MOTOR_2, STOP, POWER_MAX);
-      activateMotor(MOTOR_1, FRONT, POWER_MAX);
+      activateMotor(MOTOR_2, FRONT, POWER_MAX);
+      activateMotor(MOTOR_1, STOP, POWER_MAX);
       break;
     case RIGHT:
       Serial.println("Right");
       setAllLedlight(255, 200, 0);
-      activateMotor(MOTOR_2, FRONT, POWER_MAX);
-      activateMotor(MOTOR_1, STOP, POWER_OFF);
+      activateMotor(MOTOR_2, STOP, POWER_MAX);
+      activateMotor(MOTOR_1, FRONT, POWER_MAX);
       break;
     case TORNADO_L:
       Serial.println("Tornado Left");
